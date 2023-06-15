@@ -5,16 +5,21 @@ import (
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
+	"strconv"
 )
 
 func main() {
 	webScraper := scraper.ConsultantScraper{}
-	calendar := webScraper.GetSimpleCalendar(2023)
+	year := 2024
+	calendar := webScraper.GetSimpleCalendar(year)
 
 	serialized, err := json.Marshal(calendar)
+
+	name := "calendar_" + strconv.Itoa(year) + ".json"
+
 	if err != nil {
 		fmt.Printf("Error: %s", err)
 		return
 	}
-	_ = ioutil.WriteFile("./Output/calendar.json", serialized, 0644)
+	_ = ioutil.WriteFile("./Output/"+name, serialized, 0644)
 }
